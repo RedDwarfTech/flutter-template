@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/src/page/settings/user/signup/signup.dart';
 import '../../../generated/locales.g.dart';
-import '../home/home.dart';
 import '../settings/setting/setting.dart';
 import 'nav_controller.dart';
 
@@ -12,8 +12,6 @@ class Nav extends StatelessWidget {
     return GetBuilder<NavController>(
         init: NavController(),
         builder: (controller) {
-          final locale = Localizations.localeOf(context);
-          final locale1  = Get.locale;
           if (controller.autoTriggerNav.value) {}
 
           void _onItemTapped(int index) {
@@ -22,7 +20,7 @@ class Nav extends StatelessWidget {
 
           Widget currentMenu() {
             if (controller.selectIndex.value == 0) {
-              return HomeDefault();
+              return Signup();
             }
             if (controller.selectIndex.value == 1) {
               return Setting();
