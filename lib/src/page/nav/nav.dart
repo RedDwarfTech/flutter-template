@@ -36,7 +36,7 @@ class Nav extends StatelessWidget {
                 items: [
                   BottomNavigationBarItem(
                       icon: GestureDetector(onDoubleTap: () {}, child: Icon(Icons.home)), label: LocaleKeys.nav_home.tr),
-                  BottomNavigationBarItem(icon: Icon(Icons.settings), label: LocaleKeys.buttons_login.tr),
+                  BottomNavigationBarItem(icon: Icon(Icons.settings), label: LocaleKeys.nav_settings.tr),
                 ],
                 currentIndex: controller.selectIndex.value,
                 fixedColor: Theme.of(context).primaryColor,
