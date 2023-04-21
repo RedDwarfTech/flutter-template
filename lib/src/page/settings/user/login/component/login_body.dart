@@ -3,10 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:template/src/page/settings/user/signup/signup.dart';
 import '../../../../../common/components/my_button.dart';
 import '../../../../../common/components/my_textfield.dart';
 import 'login_body_controller.dart';
 import 'package:get/get.dart';
+import '/generated/locales.g.dart';
 
 class LoginBody extends StatelessWidget {
   @override
@@ -75,7 +77,7 @@ class LoginBody extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Log In",
+                                  LocaleKeys.buttons_login.tr,
                                   style: GoogleFonts.poppins(
                                     fontSize: 40,
                                     fontWeight: FontWeight.bold,
@@ -91,7 +93,7 @@ class LoginBody extends StatelessWidget {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Email",
+                                        LocaleKeys.buttons_phone.tr,
                                         style: GoogleFonts.poppins(
                                           fontSize: 18,
                                           color: HexColor("#8d8d8d"),
@@ -105,9 +107,9 @@ class LoginBody extends StatelessWidget {
                                           validateEmail(emailController.text);
                                         }),
                                         controller: emailController,
-                                        hintText: "hello@gmail.com",
+                                        hintText: "",
                                         obscureText: false,
-                                        prefixIcon: const Icon(Icons.mail_outline),
+                                        prefixIcon: const Icon(Icons.phone_android_outlined),
                                       ),
                                       Padding(
                                         padding:
@@ -124,7 +126,7 @@ class LoginBody extends StatelessWidget {
                                         height: 10,
                                       ),
                                       Text(
-                                        "Password",
+                                        LocaleKeys.buttons_password.tr,
                                         style: GoogleFonts.poppins(
                                           fontSize: 18,
                                           color: HexColor("#8d8d8d"),
@@ -135,7 +137,7 @@ class LoginBody extends StatelessWidget {
                                       ),
                                       MyTextField(
                                         controller: passwordController,
-                                        hintText: "**************",
+                                        hintText: "",
                                         obscureText: true,
                                         prefixIcon: const Icon(Icons.lock_outline),
                                       ),
@@ -144,7 +146,7 @@ class LoginBody extends StatelessWidget {
                                       ),
                                       MyButton(
                                         onPressed: signUserIn,
-                                        buttonText: 'Submit',
+                                        buttonText: LocaleKeys.buttons_submit.tr,
                                       ),
                                       const SizedBox(
                                         height: 12,
@@ -153,21 +155,24 @@ class LoginBody extends StatelessWidget {
                                         padding:
                                         const EdgeInsets.fromLTRB(35, 0, 0, 0),
                                         child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
-                                            Text("Don't have an account?",
+                                            Text(LocaleKeys.tip_no_account.tr,
                                                 style: GoogleFonts.poppins(
                                                   fontSize: 15,
                                                   color: HexColor("#8d8d8d"),
                                                 )),
                                             TextButton(
                                               child: Text(
-                                                "Sign Up",
+                                                LocaleKeys.buttons_sign_up.tr,
                                                 style: GoogleFonts.poppins(
                                                   fontSize: 15,
                                                   color: HexColor("#44564a"),
                                                 ),
                                               ),
-                                              onPressed: () =>{}
+                                              onPressed: () =>{
+                                                Get.to(()=>Signup())
+                                              }
                                             ),
                                           ],
                                         ),

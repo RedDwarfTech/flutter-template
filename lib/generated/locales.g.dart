@@ -17,6 +17,11 @@ class LocaleKeys {
   static const buttons_sign_in_fb = 'buttons_sign_in_fb';
   static const buttons_sign_in_google = 'buttons_sign_in_google';
   static const buttons_sign_in_apple = 'buttons_sign_in_apple';
+  static const buttons_sign_up = 'buttons_sign_up';
+  static const buttons_submit = 'buttons_submit';
+  static const buttons_phone = 'buttons_phone';
+  static const buttons_password = 'buttons_password';
+  static const tip_no_account = 'tip_no_account';
   static const nav_home = 'nav_home';
   static const nav_settings = 'nav_settings';
   static const menu_language = 'menu_language';
@@ -34,6 +39,11 @@ class Locales {
     'buttons_sign_in_fb': '用 Facebook 登录',
     'buttons_sign_in_google': '用 Google 登录',
     'buttons_sign_in_apple': '用 Apple 登录',
+    'buttons_sign_up': '注册',
+    'buttons_submit': '提交',
+    'buttons_phone': '手机',
+    'buttons_password': '密码',
+    'tip_no_account': '还没有账户?',
     'nav_home': '首页',
     'nav_settings': '设置',
     'menu_language': '语言设置',
@@ -43,12 +53,17 @@ class Locales {
     'appbar_setting': '用户设置',
   };
   static const en_US = {
-    'buttons_login': 'Login',
+    'buttons_login': 'Log In',
     'buttons_sign_in': 'Sign-in',
     'buttons_logout': 'Logout',
     'buttons_sign_in_fb': 'Sign-in with Facebook',
     'buttons_sign_in_google': 'Sign-in with Google',
     'buttons_sign_in_apple': 'Sign-in with Apple',
+    'buttons_sign_up': 'Sign Up',
+    'buttons_submit': 'Submit',
+    'buttons_phone': 'Phone',
+    'buttons_password': 'Password',
+    'tip_no_account': 'Don\'t have an account?',
     'nav_home': 'Home',
     'nav_settings': 'Settings',
     'menu_language': 'Language',

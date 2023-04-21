@@ -1,11 +1,18 @@
 {
   "buttons": {
-    "login": "Login",
+    "login": "Log In",
     "sign_in": "Sign-in",
     "logout": "Logout",
     "sign_in_fb": "Sign-in with Facebook",
     "sign_in_google": "Sign-in with Google",
-    "sign_in_apple": "Sign-in with Apple"
+    "sign_in_apple": "Sign-in with Apple",
+    "sign_up": "Sign Up",
+    "submit": "Submit",
+    "phone": "Phone",
+    "password": "Password"
+  },
+  "tip": {
+    "no_account": "Don't have an account?"
   },
   "nav": {
     "home": "Home",

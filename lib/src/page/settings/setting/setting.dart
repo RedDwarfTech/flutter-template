@@ -1,6 +1,9 @@
+import 'package:avatars/avatars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/src/page/settings/user/login/login.dart';
+import 'package:wheel/wheel.dart';
 import '../../../../generated/locales.g.dart';
 import 'about/about.dart';
 import 'language/language.dart';
@@ -9,10 +12,6 @@ import 'setting_controller.dart';
 import 'terms/terms_of_service.dart';
 
 class Setting extends StatelessWidget {
-  TextStyle textStyle = TextStyle(
-    color: Colors.black,
-  );
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SettingController>(
@@ -24,7 +23,7 @@ class Setting extends StatelessWidget {
                 backgroundColor: Color.fromRGBO(235, 233, 241, 1),
                 title: Text(
                   LocaleKeys.appbar_setting.tr,
-                  style: textStyle,
+                  style: controller.textStyle,
                 ),
               ),
               body: SafeArea(
@@ -33,6 +32,25 @@ class Setting extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        children: [
+                          Obx(
+                            () => Avatar(
+                                onTap: () => {Get.to(()=>Login())},
+                                name: controller.isLoggedIn() ? controller.currentUser.value.nickName : 'Unknown'),
+                          ),
+                          SizedBox(width: 16.0),
+                          Obx(() => GestureDetector(
+                              onTap: () => {Get.to(()=>Login())},
+                              child:Text(
+                                controller.isLoggedIn() ? controller.currentUser.value.nickName : '未登录',
+                                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                              ))),
+                        ],
+                      ),
+                    ),
                     Card(
                       elevation: 3,
                       shape: RoundedRectangleBorder(
@@ -57,7 +75,7 @@ class Setting extends StatelessWidget {
                             ),
                             title: Text(LocaleKeys.menu_language.tr),
                             trailing: Icon(Icons.arrow_forward_ios_rounded),
-                            onTap: ()=>{Get.to(Language())},
+                            onTap: () => {Get.to(Language())},
                           ),
                         ],
                       ),

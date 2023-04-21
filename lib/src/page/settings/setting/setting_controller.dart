@@ -3,9 +3,16 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:wheel/wheel.dart';
 
 class SettingController extends GetxController {
   var themeMode = ThemeMode.system.obs;
+  var isLoggedIn = false.obs;
+  late Rx<AppUser> currentUser;
+
+  TextStyle textStyle = TextStyle(
+    color: Colors.black,
+  );
 
   @override
   void onInit() {
@@ -18,6 +25,20 @@ class SettingController extends GetxController {
       String local = box.read("locale");
       Get.updateLocale(localeFromJson(local));
     }
+    checkCurrentUser();
+    checkLoginStatus();
+  }
+
+  Future<void> checkCurrentUser() async {
+    if(await Auth.isLoggedIn()) {
+      AppUser appUser = await Auth.currentUser();
+      currentUser.value = appUser;
+    }
+  }
+
+  Future<void> checkLoginStatus() async {
+   bool isUserLoggedIn = await Auth.isLoggedIn();
+   isLoggedIn.value = isUserLoggedIn;
   }
 
   String localeToJson(Locale locale) {
