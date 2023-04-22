@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/src/page/settings/user/login/login.dart';
 import 'package:wheel/wheel.dart';
 import '../../../generated/locales.g.dart';
 import '../nav/nav.dart';
@@ -31,10 +32,15 @@ class AppPage extends StatelessWidget {
             locale: Locale('zh', 'CN'),
             fallbackLocale:Locale('en', 'US'),
             routes: {
-
             },
             home: buildHomePage(),
-            onGenerateRoute: (RouteSettings settings) {},
+            onGenerateRoute: (RouteSettings settings) {
+              if (settings.name == '/login') {
+                return MaterialPageRoute(
+                  builder: (context) => Login(),
+                );
+              }
+            },
           );
         });
   }

@@ -3,9 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:template/src/page/settings/setting/setting.dart';
 import 'package:template/src/page/settings/user/signup/signup.dart';
+import 'package:wheel/wheel.dart';
 import '../../../../../common/components/my_button.dart';
 import '../../../../../common/components/my_textfield.dart';
+import '../../../setting/setting_controller.dart';
 import 'login_body_controller.dart';
 import 'package:get/get.dart';
 import '/generated/locales.g.dart';
@@ -16,14 +19,8 @@ class LoginBody extends StatelessWidget {
     return GetBuilder<LoginBodyController>(
         init: LoginBodyController(),
         builder: (controller) {
-
           final emailController = TextEditingController();
           final passwordController = TextEditingController();
-          void signUserIn() async {
-
-              //await FirebaseAuth.instance.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text);
-
-          }
 
           void showErrorMessage(String message) {
             showDialog(
@@ -35,16 +32,26 @@ class LoginBody extends StatelessWidget {
                 });
           }
 
+          void signUserIn() async {
+            AppLoginRequest appLoginRequest = AppLoginRequest(
+                username: "+86" + controller.phone.value,
+                password: controller.password.value,
+                loginUrl: "/post/user/login",
+                loginType: LoginType.PHONE);
+            var resp = await Auth.login(appLoginRequest: appLoginRequest);
+            if (RestClient.respSuccess(resp)) {
+              final settingController = Get.find<SettingController>();
+              settingController.isLoggedIn.value = true;
+              Get.to(() => Setting());
+            } else {
+              showErrorMessage(resp.data["msg"]);
+            }
+          }
+
           String _errorMessage = "";
 
-          void validateEmail(String val) {
-            if (val.isEmpty) {
-              controller.errorMsg.value =  "Email can not be empty";
-            } else if (!EmailValidator.validate(val, true)) {
-              controller.errorMsg.value =  "Invalid Email Address";
-            } else {
-              controller.errorMsg.value =  "";
-            }
+          void validatePhone(String val) {
+            controller.phone.value = val;
           }
 
           return SafeArea(
@@ -103,17 +110,14 @@ class LoginBody extends StatelessWidget {
                                         height: 10,
                                       ),
                                       MyTextField(
-                                        onChanged: (() {
-                                          validateEmail(emailController.text);
-                                        }),
+                                        onChanged: () => validatePhone(emailController.text),
                                         controller: emailController,
                                         hintText: "",
                                         obscureText: false,
                                         prefixIcon: const Icon(Icons.phone_android_outlined),
                                       ),
                                       Padding(
-                                        padding:
-                                        const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                                        padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
                                         child: Text(
                                           _errorMessage,
                                           style: GoogleFonts.poppins(
@@ -136,6 +140,9 @@ class LoginBody extends StatelessWidget {
                                         height: 10,
                                       ),
                                       MyTextField(
+                                        onChanged: (() {
+                                          controller.password.value = passwordController.text;
+                                        }),
                                         controller: passwordController,
                                         hintText: "",
                                         obscureText: true,
@@ -152,8 +159,7 @@ class LoginBody extends StatelessWidget {
                                         height: 12,
                                       ),
                                       Padding(
-                                        padding:
-                                        const EdgeInsets.fromLTRB(35, 0, 0, 0),
+                                        padding: const EdgeInsets.fromLTRB(35, 0, 0, 0),
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
@@ -163,17 +169,14 @@ class LoginBody extends StatelessWidget {
                                                   color: HexColor("#8d8d8d"),
                                                 )),
                                             TextButton(
-                                              child: Text(
-                                                LocaleKeys.buttons_sign_up.tr,
-                                                style: GoogleFonts.poppins(
-                                                  fontSize: 15,
-                                                  color: HexColor("#44564a"),
+                                                child: Text(
+                                                  LocaleKeys.buttons_sign_up.tr,
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: 15,
+                                                    color: HexColor("#44564a"),
+                                                  ),
                                                 ),
-                                              ),
-                                              onPressed: () =>{
-                                                Get.to(()=>Signup())
-                                              }
-                                            ),
+                                                onPressed: () => {Get.to(() => Signup())}),
                                           ],
                                         ),
                                       ),

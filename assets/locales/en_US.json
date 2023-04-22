@@ -9,10 +9,12 @@
     "sign_up": "Sign Up",
     "submit": "Submit",
     "phone": "Phone",
-    "password": "Password"
+    "password": "Password",
+    "proceed": "Proceed"
   },
   "tip": {
-    "no_account": "Don't have an account?"
+    "no_account": "Don't have an account?",
+    "no_account": "Already have an account?"
   },
   "nav": {
     "home": "Home",

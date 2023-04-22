@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/src/page/home/home.dart';
 import 'package:template/src/page/settings/user/signup/signup.dart';
 import '../../../generated/locales.g.dart';
 import '../settings/setting/setting.dart';
@@ -20,7 +21,7 @@ class Nav extends StatelessWidget {
 
           Widget currentMenu() {
             if (controller.selectIndex.value == 0) {
-              return Signup();
+              return HomeDefault();
             }
             if (controller.selectIndex.value == 1) {
               return Setting();

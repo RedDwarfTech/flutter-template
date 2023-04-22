@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/src/page/settings/user/login/login.dart';
-import 'package:wheel/wheel.dart';
+import 'package:template/src/page/settings/user/profile/profile.dart';
 import '../../../../generated/locales.g.dart';
 import 'about/about.dart';
 import 'language/language.dart';
@@ -17,6 +17,15 @@ class Setting extends StatelessWidget {
     return GetBuilder<SettingController>(
         init: SettingController(),
         builder: (controller) {
+
+          void tapProfile(){
+            if (controller.isLoggedIn()) {
+              Get.to(() => Profile());
+            } else {
+              Get.to(() => Login());
+            }
+          }
+
           return Scaffold(
               backgroundColor: Color.fromRGBO(235, 233, 241, 1),
               appBar: AppBar(
@@ -38,13 +47,13 @@ class Setting extends StatelessWidget {
                         children: [
                           Obx(
                             () => Avatar(
-                                onTap: () => {Get.to(()=>Login())},
+                                onTap: () => {tapProfile()},
                                 name: controller.isLoggedIn() ? controller.currentUser.value.nickName : 'Unknown'),
                           ),
                           SizedBox(width: 16.0),
                           Obx(() => GestureDetector(
-                              onTap: () => {Get.to(()=>Login())},
-                              child:Text(
+                              onTap: () => {tapProfile()},
+                              child: Text(
                                 controller.isLoggedIn() ? controller.currentUser.value.nickName : '未登录',
                                 style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                               ))),

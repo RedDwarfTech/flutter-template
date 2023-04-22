@@ -8,7 +8,7 @@ import 'package:wheel/wheel.dart';
 class SettingController extends GetxController {
   var themeMode = ThemeMode.system.obs;
   var isLoggedIn = false.obs;
-  late Rx<AppUser> currentUser;
+  late Rx<AppUser> currentUser = AppUser(phone: "0", registerTime: "0", nickName: "unknown").obs;
 
   TextStyle textStyle = TextStyle(
     color: Colors.black,

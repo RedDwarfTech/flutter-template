@@ -21,7 +21,9 @@ class LocaleKeys {
   static const buttons_submit = 'buttons_submit';
   static const buttons_phone = 'buttons_phone';
   static const buttons_password = 'buttons_password';
+  static const buttons_proceed = 'buttons_proceed';
   static const tip_no_account = 'tip_no_account';
+  static const tip_has_account = 'tip_has_account';
   static const nav_home = 'nav_home';
   static const nav_settings = 'nav_settings';
   static const menu_language = 'menu_language';
@@ -35,7 +37,7 @@ class Locales {
   static const zh_CN = {
     'buttons_login': '登录',
     'buttons_sign_in': '注册',
-    'buttons_logout': '注销',
+    'buttons_logout': '登出',
     'buttons_sign_in_fb': '用 Facebook 登录',
     'buttons_sign_in_google': '用 Google 登录',
     'buttons_sign_in_apple': '用 Apple 登录',
@@ -43,13 +45,15 @@ class Locales {
     'buttons_submit': '提交',
     'buttons_phone': '手机',
     'buttons_password': '密码',
+    'buttons_proceed': '继续',
     'tip_no_account': '还没有账户?',
+    'tip_has_account': '已经有账户?',
     'nav_home': '首页',
     'nav_settings': '设置',
     'menu_language': '语言设置',
     'menu_privacy': '隐私政策',
     'menu_terms': '隐私条款',
-    'menu_about': '隐私条款',
+    'menu_about': '关于SleepEase',
     'appbar_setting': '用户设置',
   };
   static const en_US = {
@@ -63,7 +67,8 @@ class Locales {
     'buttons_submit': 'Submit',
     'buttons_phone': 'Phone',
     'buttons_password': 'Password',
-    'tip_no_account': 'Don\'t have an account?',
+    'buttons_proceed': 'Proceed',
+    'tip_no_account': 'Already have an account?',
     'nav_home': 'Home',
     'nav_settings': 'Settings',
     'menu_language': 'Language',

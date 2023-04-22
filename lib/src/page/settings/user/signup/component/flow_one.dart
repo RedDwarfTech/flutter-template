@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_cli/common/utils/json_serialize/json_ast/error.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:email_validator/email_validator.dart';
-
+import 'package:template/src/page/home/home.dart';
+import 'package:wheel/wheel.dart';
 import '../../../../../common/components/my_button.dart';
 import '../../login/login.dart';
 import '../signup_controller.dart';
 import 'flow_controller.dart';
-
-List<String> list = <String>['Student', 'Teacher', 'Alumni'];
+import '/generated/locales.g.dart';
 
 class SignUpOne extends StatefulWidget {
   const SignUpOne({super.key});
@@ -24,7 +25,6 @@ class _SignUpOneState extends State<SignUpOne> {
   SignupController signUpController = Get.put(SignupController());
   FlowController flowController = Get.put(FlowController());
 
-  String dropdownValue = list.first;
   String _errorMessage = "";
 
   @override
@@ -50,7 +50,7 @@ class _SignUpOneState extends State<SignUpOne> {
                   width: 67,
                 ),
                 Text(
-                  "Sign Up",
+                  LocaleKeys.buttons_sign_up.tr,
                   style: GoogleFonts.poppins(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
@@ -67,46 +67,11 @@ class _SignUpOneState extends State<SignUpOne> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "User Type",
-                    style: GoogleFonts.poppins(
-                      fontSize: 16,
-                      color: HexColor("#8d8d8d"),
-                    ),
-                  ),
-                  DropdownButton<String>(
-                    value: dropdownValue,
-                    icon: const Icon(Icons.arrow_drop_down),
-                    elevation: 16,
-                    style: GoogleFonts.poppins(
-                      fontSize: 15,
-                      color: HexColor("#8d8d8d"),
-                    ),
-                    isExpanded: true,
-                    underline: Container(
-                      height: 2,
-                      color: HexColor("#ffffff"),
-                    ),
-                    iconSize: 30,
-                    borderRadius: BorderRadius.circular(20),
-                    onChanged: (String? value) {
-                      setState(() {
-                        dropdownValue = value!;
-                        signUpController.setUserType(value);
-                      });
-                    },
-                    items: list.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
                   const SizedBox(
                     height: 1,
                   ),
                   Text(
-                    "Email",
+                    LocaleKeys.buttons_phone.tr,
                     style: GoogleFonts.poppins(
                       fontSize: 16,
                       color: HexColor("#8d8d8d"),
@@ -118,7 +83,6 @@ class _SignUpOneState extends State<SignUpOne> {
                   TextField(
                     controller: emailController.value,
                     onChanged: (value) {
-                      validateEmail(value);
                       signUpController.setEmail(value);
                     },
                     onSubmitted: (value) {
@@ -126,7 +90,7 @@ class _SignUpOneState extends State<SignUpOne> {
                     },
                     cursorColor: HexColor("#4f4f4f"),
                     decoration: InputDecoration(
-                      hintText: "hello@gmail.com",
+                      hintText: "",
                       fillColor: HexColor("#f0f3f1"),
                       contentPadding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
                       hintStyle: GoogleFonts.poppins(
@@ -154,7 +118,7 @@ class _SignUpOneState extends State<SignUpOne> {
                     height: 5,
                   ),
                   Text(
-                    "Password",
+                    LocaleKeys.buttons_password.tr,
                     style: GoogleFonts.poppins(
                       fontSize: 16,
                       color: HexColor("#8d8d8d"),
@@ -174,7 +138,7 @@ class _SignUpOneState extends State<SignUpOne> {
                     controller: passwordController.value,
                     cursorColor: HexColor("#4f4f4f"),
                     decoration: InputDecoration(
-                      hintText: "*************",
+                      hintText: "",
                       fillColor: HexColor("#f0f3f1"),
                       contentPadding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
                       hintStyle: GoogleFonts.poppins(
@@ -193,7 +157,7 @@ class _SignUpOneState extends State<SignUpOne> {
                     height: 5,
                   ),
                   MyButton(
-                      buttonText: 'Proceed',
+                      buttonText: LocaleKeys.buttons_sign_up.tr,
                       onPressed: () async {
                         if (signUpController.userType != null &&
                             signUpController.email != null &&
@@ -202,10 +166,23 @@ class _SignUpOneState extends State<SignUpOne> {
                               await signUpController.registerUser(
                                   signUpController.email.toString(),
                                   signUpController.password.toString());
-                          debugPrint(isRegistered.toString());
                           if (isRegistered) {
-                            Get.snackbar("Success", "User Registered");
-                            flowController.setFlow(2);
+                            var result = await UserService.regUser(
+                              phone: "+86" + signUpController.email!,
+                              password: signUpController.password!,
+                              verifyCode: '123456',
+                              appRegUrl: '/ai/user/reg'
+                            );
+                            if (!RestClient.respSuccess(result)) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(result.data["msg"]),
+                                ),
+                              );
+                            } else {
+                              Get.snackbar("Success", "User Registered");
+                              Get.to(()=>Settings());
+                            }
                           } else {
                             Get.snackbar("Error", "Please fill all the fields");
                           }
@@ -214,15 +191,16 @@ class _SignUpOneState extends State<SignUpOne> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(35, 0, 0, 0),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Already have an account?",
+                        Text(LocaleKeys.tip_has_account.tr,
                             style: GoogleFonts.poppins(
                               fontSize: 15,
                               color: HexColor("#8d8d8d"),
                             )),
                         TextButton(
                           child: Text(
-                            "Log In",
+                            LocaleKeys.buttons_login.tr,
                             style: GoogleFonts.poppins(
                               fontSize: 15,
                               color: HexColor("#44564a"),
